@@ -177,7 +177,11 @@ def model_resume(args, model, ema, logger, len_loader):
                 f"    Cannot find model checkpoint from {resume_path}"
             )
         logger.info(f"    Resume from checkpoint {resume_path}")
-        resume_ckpt = torch.load(resume_path, map_location=lambda storage, loc: storage)
+        resume_ckpt = torch.load(
+            resume_path,
+            map_location=lambda storage, loc: storage,
+            weights_only=True,
+        )
         if "module" in resume_ckpt.keys():
             model.load_state_dict(resume_ckpt["module"], strict=args.strict)
         else:
@@ -192,7 +196,9 @@ def model_resume(args, model, ema, logger, len_loader):
             )
         logger.info(f"    Resume from ema checkpoint {resume_path}")
         resume_ema_ckpt = torch.load(
-            resume_ema_path, map_location=lambda storage, loc: storage
+            resume_ema_path,
+            map_location=lambda storage, loc: storage,
+            weights_only=True,
         )
         if "ema" in resume_ema_ckpt.keys():
             ema.load_state_dict(resume_ema_ckpt["ema"], strict=args.strict)
@@ -210,7 +216,9 @@ def model_resume(args, model, ema, logger, len_loader):
         if Path(args.resume_ipa_root).exists():
             logger.info(f"    Resume from ipa checkpoint {args.resume_ipa_root}")
             ipa_state_dict = torch.load(
-                args.resume_ipa_root, map_location=lambda storage, loc: storage
+                args.resume_ipa_root,
+                map_location=lambda storage, loc: storage,
+                weights_only=True,
             )
             model.load_state_dict(ipa_state_dict, strict=False)
         else:

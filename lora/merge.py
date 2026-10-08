@@ -18,7 +18,11 @@ model = HUNYUAN_DIT_MODELS[args.model](
 model_path = os.path.join(
     args.model_root, "t2i", "model", f"pytorch_model_{args.load_key}.pt"
 )
-state_dict = torch.load(model_path, map_location=lambda storage, loc: storage)
+state_dict = torch.load(
+    model_path,
+    map_location=lambda storage, loc: storage,
+    weights_only=True,
+)
 
 print(f"Loading model from {model_path}")
 model.load_state_dict(state_dict)

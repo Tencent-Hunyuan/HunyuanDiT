@@ -982,7 +982,7 @@ def create_network_from_weights(
 
             weights_sd = load_file(file)
         else:
-            weights_sd = torch.load(file, map_location="cpu")
+            weights_sd = torch.load(file, map_location="cpu", weights_only=True)
 
     # if keys are Diffusers based, convert to SAI based
     convert_diffusers_to_sai_if_needed(weights_sd)
@@ -1272,7 +1272,7 @@ class LoRANetwork(torch.nn.Module):
 
             weights_sd = load_file(file)
         else:
-            weights_sd = torch.load(file, map_location="cpu")
+            weights_sd = torch.load(file, map_location="cpu", weights_only=True)
 
         info = self.load_state_dict(weights_sd, False)
         return info

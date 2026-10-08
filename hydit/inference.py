@@ -350,7 +350,9 @@ class End2End(object):
         else:
             # Assume it's a single weight file in the *.pt format.
             state_dict = torch.load(
-                model_path, map_location=lambda storage, loc: storage
+                model_path,
+                map_location=lambda storage, loc: storage,
+                weights_only=True,
             )
 
         if bare_model == "unknown" and ("ema" in state_dict or "module" in state_dict):
@@ -408,7 +410,7 @@ class End2End(object):
                     .to(self.device)
                 )
 
-                controlnet_state_dict = torch.load(controlnet_path)
+                controlnet_state_dict = torch.load(controlnet_path, weights_only=True)
                 self.controlnet.load_state_dict(controlnet_state_dict, strict=False)
                 self.controlnet.eval()
                 self.pipeline, self.sampler = self.load_sampler(sampler=sampler)

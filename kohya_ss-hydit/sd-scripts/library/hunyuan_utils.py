@@ -244,12 +244,13 @@ def load_model(
         input_size=(128, 128), use_extra_cond=use_extra_cond
     )
     if dit_path is not None:
-        state_dict = torch.load(dit_path)
+        state_dict = torch.load(dit_path, weights_only=True)
         if "state_dict" in state_dict:
             state_dict = state_dict["state_dict"]
     else:
         state_dict = torch.load(
-            os.path.join(model_path, "denoiser/pytorch_model_module.pt")
+            os.path.join(model_path, "denoiser/pytorch_model_module.pt"),
+            weights_only=True,
         )
     denoiser.load_state_dict(state_dict)
     denoiser.to(device).to(dtype)

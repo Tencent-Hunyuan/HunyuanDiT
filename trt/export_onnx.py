@@ -77,7 +77,11 @@ class ExportONNX(object):
         )  # Force to use fp16
         # Load model checkpoint
         logger.info(f"Loading torch model {model_path}...")
-        state_dict = torch.load(model_path, map_location=lambda storage, loc: storage)
+        state_dict = torch.load(
+            model_path,
+            map_location=lambda storage, loc: storage,
+            weights_only=True,
+        )
         self.model.load_state_dict(state_dict)
         self.model.eval()
         logger.info(f"Loading torch model finished")

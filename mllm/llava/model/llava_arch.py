@@ -101,7 +101,7 @@ class LlavaMetaModel:
 
         if pretrain_mm_mlp_adapter is not None:
             mm_projector_weights = torch.load(
-                pretrain_mm_mlp_adapter, map_location="cpu"
+                pretrain_mm_mlp_adapter, map_location="cpu", weights_only=True
             )
 
             def get_w(weights, keyword):
@@ -493,7 +493,9 @@ class LlavaMetaForCausalLM(ABC):
 
             if model_args.pretrain_mm_mlp_adapter:
                 mm_projector_weights = torch.load(
-                    model_args.pretrain_mm_mlp_adapter, map_location="cpu"
+                    model_args.pretrain_mm_mlp_adapter,
+                    map_location="cpu",
+                    weights_only=True,
                 )
                 embed_tokens_weight = mm_projector_weights["model.embed_tokens.weight"]
                 assert num_new_tokens == 2

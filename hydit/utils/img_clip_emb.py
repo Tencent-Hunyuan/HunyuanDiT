@@ -755,7 +755,7 @@ class ImgClipEmbDetector:
             convert_models_to_fp32(model)
         if self.cfg["precision"] == "fp16":
             convert_weights(model)
-        checkpoint = torch.load(self.cfg["resume"], map_location="cpu")
+        checkpoint = torch.load(self.cfg["resume"], map_location="cpu", weights_only=True)
         sd = checkpoint["state_dict"]
         if next(iter(sd.items()))[0].startswith("module"):
             sd = {

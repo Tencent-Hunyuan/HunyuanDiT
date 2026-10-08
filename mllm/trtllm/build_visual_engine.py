@@ -575,13 +575,16 @@ def build_neva_engine(args):
         try:
             # trained without TP
             mp0_weights = torch.load(
-                tar.extractfile("./model_weights.ckpt"), map_location=args.device
+                tar.extractfile("./model_weights.ckpt"),
+                map_location=args.device,
+                weights_only=True,
             )
         except KeyError:
             # trained with TP
             mp0_weights = torch.load(
                 tar.extractfile("./mp_rank_00/model_weights.ckpt"),
                 map_location=args.device,
+                weights_only=True,
             )
 
     vision_config = nemo_config["mm_cfg"]["vision_encoder"]

@@ -1284,7 +1284,7 @@ HUNYUAN_DIT_MODELS = {
 
 if __name__ == "__main__":
     denoiser: HunYuanDiT = DiT_g_2(input_size=(128, 128))
-    sd = torch.load("./model/denoiser/pytorch_model_module.pt")
+    sd = torch.load("./model/denoiser/pytorch_model_module.pt", weights_only=True)
     denoiser.load_state_dict(sd)
     denoiser.half().cuda()
     denoiser.enable_gradient_checkpointing()

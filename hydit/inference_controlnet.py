@@ -369,7 +369,9 @@ class End2End(object):
         else:
             # Assume it's a single weight file in the *.pt format.
             state_dict = torch.load(
-                model_path, map_location=lambda storage, loc: storage
+                model_path,
+                map_location=lambda storage, loc: storage,
+                weights_only=True,
             )
 
         logger.info(f"Loading controlnet model {controlnet_path}...")
@@ -378,7 +380,9 @@ class End2End(object):
         else:
             # Assume it's a single weight file in the *.pt format.
             controlnet_state_dict = torch.load(
-                controlnet_path, map_location=lambda storage, loc: storage
+                controlnet_path,
+                map_location=lambda storage, loc: storage,
+                weights_only=True,
             )
             if "module" in controlnet_state_dict:
                 controlnet_state_dict = controlnet_state_dict["module"]
