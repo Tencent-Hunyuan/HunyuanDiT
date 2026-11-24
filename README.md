@@ -462,6 +462,13 @@ All models will be automatically downloaded. For more information about the mode
 
   Specifically for distributed training, you have the flexibility to control **single-node** / **multi-node** training by adjusting parameters such as `--hostfile` and `--master_addr`. For more details, see [link](https://www.deepspeed.ai/getting-started/#resource-configuration-multi-node).
 
+  <!-- Modified: document the distilled checkpoint required by the training script. -->
+  Before training, download the distilled checkpoint expected by `hydit/train.sh`. The base model download above does not include this file.
+
+  ```shell
+  huggingface-cli download Tencent-Hunyuan/Distillation-v1.2 pytorch_model_distill.pt --local-dir ./ckpts/t2i/model
+  ```
+
   ```shell
   # Single Resolution Training
   PYTHONPATH=./ sh hydit/train.sh --index-file dataset/porcelain/jsons/porcelain.json
